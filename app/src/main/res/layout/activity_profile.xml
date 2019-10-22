@@ -4,35 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
     tools:context=".ProfileActivity">
-    <EditText
-        android:id="@+id/edit_phoneNum"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        />
+        android:layout_height="wrap_content">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccr"
+            android:layout_width="89dp"
+            android:layout_height="56dp"
+            android:onClick="onCountryPickerClick"
+            android:tooltipText="" />
+
+        <EditText
+            android:id="@+id/edit_phoneNum"
+            android:layout_width="291dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:hint="Enter phone number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/edit_phoneCode"
+            android:layout_width="291dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="8dp"
+            android:hint="Enter code received"
+            android:inputType="phone"
+            android:visibility="invisible" />
+
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/btn_confirm"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_numSend"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Отправить код"
-        android:onClick="onClick"
-        />
-    <EditText
-        android:id="@+id/edit_phoneCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:visibility="invisible"
-        />
+        android:layout_marginLeft="50dp"
+        android:text="Отправить код" />
+
     <Button
-        android:id="@+id/btn_codesend"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_codeSend"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_marginLeft="50dp"
         android:text="Подтвердить"
-        />
+        android:visibility="invisible" />
+
 
 </LinearLayout>
