@@ -31,7 +31,6 @@
             android:id="@+id/edit_phoneCode"
             android:layout_width="291dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="8dp"
             android:hint="Enter code received"
             android:inputType="phone"

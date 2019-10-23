@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getUserInfo() {
-//            if (FirebaseFirestore!=null) {
+           if (FirebaseFirestore!=null) {
         com.google.firebase.firestore.FirebaseFirestore.getInstance().collection("users")
                 .document((FirebaseAuth.getInstance().getCurrentUser()).getUid())
                 .get()
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-//        }
+       }
 
 
     //    public void getUserInfoListener() {
@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
             name = data.getStringExtra("key");
             textName.setText(name);
+            Intent intent = new Intent(this,EditNameActivity.class);
+            intent.putExtra("key20",name);
         }
         if (requestCode==SELECT_IMAGE && resultCode == RESULT_OK && data!= null){
             try {
@@ -150,15 +152,14 @@ public class MainActivity extends AppCompatActivity {
     private void saveText() {
         preferences = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = preferences.edit();
-        ed.putString(SAVE_TEXT, name);
+        ed.putString(SAVE_TEXT, textName.getText().toString());
         ed.commit();
     }
     private void loadText() {
         preferences = getPreferences(MODE_PRIVATE);
         String savedText = preferences.getString(SAVE_TEXT, "");
-        if (savedText!=null) {
             textName.setText(savedText);
-        }
+
     }
 
     @Override

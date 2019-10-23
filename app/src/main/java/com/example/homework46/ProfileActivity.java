@@ -45,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextCode = findViewById(R.id.edit_phoneCode);
         editTextPhone = findViewById(R.id.edit_phoneNum);
+        ccp=findViewById(R.id.ccr);
+        ccp.registerCarrierNumberEditText(editTextPhone);
         btn_numSend = findViewById(R.id.btn_numSend);
         btn_codeSend = findViewById(R.id.btn_codeSend);
         btn_numSend.setOnClickListener(new View.OnClickListener() {
@@ -96,25 +98,32 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void sendVerificationCode() {
-        String phoneNumber = editTextPhone.getText().toString();
-        if (TextUtils.isEmpty(phoneNumber)) {
-            editTextPhone.setError("Phone number is required");
+        if (TextUtils.isEmpty(selected_country_code)) {
+            editTextPhone.setError("Выберите код страны!");
             editTextPhone.requestFocus();
+            Toast.makeText(this, "Вы не ввели код страны", Toast.LENGTH_SHORT).show();
             return;
         }
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNumber,        // Phone number to verify
-                30,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                this,               // Activity (for callback binding)
-                mCallbacks);        // OnVerificationStateChangedCallbacks
+        String phoneNumber = selected_country_code + editTextPhone.getText().toString();
+            if (TextUtils.isEmpty(phoneNumber)) {
+                editTextPhone.setError("Phone number is required");
+                editTextPhone.requestFocus();
+                return;
+            }
+            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                    phoneNumber,        // Phone number to verify
+                    30,                 // Timeout duration
+                    TimeUnit.SECONDS,   // Unit of timeout
+                    this,               // Activity (for callback binding)
+                    mCallbacks);        // OnVerificationStateChangedCallbacks
+
     }
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            editTextCode.setText(phoneAuthCredential.getSmsCode());
-            editTextCode.setText(codeSent);
+//            editTextCode.setText(phoneAuthCredential.getSmsCode());
+//            editTextCode.setText(codeSent);
         }
 
         @Override
@@ -134,6 +143,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCountrySelected() {
                 selected_country_code = ccp.getSelectedCountryCodeWithPlus();
+                Toast.makeText(ProfileActivity.this, selected_country_code, Toast.LENGTH_SHORT).show();
             }
         });
     }
